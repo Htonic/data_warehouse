@@ -1,6 +1,6 @@
 CREATE TABLE ce_sales (
-    sale_id          INTEGER PRIMARY KEY,
-    cl_sale_id       INTEGER,
+    sale_id          INTEGER NOT NULL,
+    cl_sale_id       INTEGER NOT NULL,
     product_id       INTEGER DEFAULT -1 NOT NULL,
     customer_id      INTEGER DEFAULT -1 NOT NULL,
     sale_date        DATE NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE ce_sales (
     other_discount   NUMBER(18, 2) NOT NULL,
     coupon_discount  NUMBER(18, 2) NOT NULL,
     cost_price       NUMBER(18, 2) NOT NULL,
-    update_dt        DATE DEFAULT CURRENT_DATE NOT NULL
+    update_dt        DATE DEFAULT GETDATE() NOT NULL
 );
 
 ALTER TABLE ce_sales

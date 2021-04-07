@@ -21,7 +21,7 @@ INSERT INTO ce_age_range(age_range_id, age_range) VALUES
 
 INSERT INTO ce_family_sizes(family_id, family_size, update_dt) 
 VALUES
-(-1, 'N/A', current_date);
+(-1, 'N/A', GETDATE());
 
 INSERT INTO ce_marital_statuses(marital_id, marital_status) VALUES
 (-1, 'N/A');
@@ -33,23 +33,23 @@ INSERT INTO ce_customers(customer_id, customer_natural_id, rented, income_bracke
 	age_range_id, marital_id, family_id, no_of_child_id, update_dt) 
 VALUES
 	(-1, -1, 0, 0,
-	-1, -1, -1, -1, current_date);
+	-1, -1, -1, -1, GETDATE());
 
 
 INSERT INTO ce_employees(employee_id, employee_natural_id, employee_name,
 employee_surname, age, email, phone, update_dt) VALUES 
 	 (-1, -1, 'N/A',
-	 'N/A', 0, 'N/A', 'N/A', current_date);
+	 'N/A', 0, 'N/A', 'N/A', GETDATE());
 
 
 INSERT INTO ce_coupons(coupon_id, coupon_natural_id, 
 	coupon_desc, issued_quantity, update_dt) 
 VALUES
-	(-1, -1, 'N/A', 0, current_date);
+	(-1, -1, 'N/A', 0, GETDATE());
 
 INSERT INTO ce_payment_types(payment_type_id, payment_type_natural_id,
- payment_type_desc, updatre_dt) VALUES
-        (-1, -1, 'N/A', current_date);
+ payment_type_desc, update_dt) VALUES
+        (-1, -1, 'N/A', GETDATE());
 
 
 INSERT INTO ce_product_categories(product_category_id, product_category_desc) VALUES
@@ -59,8 +59,8 @@ INSERT INTO ce_product_brand_types(brand_type_id, brand_type) VALUES
 (-1, 'N/A');
 
 INSERT INTO ce_product_brand(brand_id, brand, brand_type_id, update_dt) VALUES
-        (-1, 'N/A', -1, current_date);
+        (-1, -1, -1, GETDATE());
 
 INSERT INTO ce_products(product_id, product_natural_id, brand_id,
 	product_category_id,start_date, end_date, is_active, update_dt) VALUES
-	(-1,-1, -1, -1, '1970.12.12','1970.12.12', '0', current_date);
+	(-1,-1, -1, -1, '1970.12.12','1970.12.12', '0', GETDATE());

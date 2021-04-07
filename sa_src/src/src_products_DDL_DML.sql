@@ -1,8 +1,8 @@
 CREATE TABLE src_products(
-    item_id VARCHAR2(255),
-    brand VARCHAR2(255),
-    brand_type VARCHAR2(255),
-    product_category VARCHAR2(255)
+    item_id NVARCHAR(255),
+    brand NVARCHAR(255),
+    brand_type NVARCHAR(255),
+    product_category NVARCHAR(255)
 );
 
 INSERT INTO src_products ( item_id, brand, brand_type, product_category)

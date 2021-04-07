@@ -1,12 +1,12 @@
 CREATE TABLE ce_stores (
-    store_id        INTEGER PRIMARY KEY,
-    store_number    VARCHAR2(14) NOT NULL,
-    store_name      VARCHAR2(60) NOT NULL,
-    street_address  VARCHAR2(255) NOT NULL,
-    phone_number    VARCHAR2(20) NOT NULL,
+    store_id        INTEGER NOT NULL,
+    store_number    NVARCHAR(14) NOT NULL,
+    store_name      NVARCHAR(60) NOT NULL,
+    street_address  NVARCHAR(255) NOT NULL,
+    phone_number    NVARCHAR(20) NOT NULL,
     city_id         INTEGER DEFAULT -1 NOT NULL,
     postcode_id     INTEGER DEFAULT -1 NOT NULL,
-    update_dt      DATE DEFAULT CURRENT_DATE NOT NULL
+    update_dt      DATE DEFAULT GETDATE() NOT NULL
 );
 
 INSERT INTO ce_stores(store_id, store_number,

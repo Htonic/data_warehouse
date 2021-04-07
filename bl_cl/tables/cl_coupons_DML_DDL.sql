@@ -1,6 +1,6 @@
 CREATE TABLE cl_coupons(
     coupon_id INT,
-    coupon_desc VARCHAR(60),
+    coupon_desc NVARCHAR(60),
     issued_quantity INT
 );
 

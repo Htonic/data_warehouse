@@ -1,12 +1,12 @@
 CREATE TABLE cl_stores(
- store_number VARCHAR2(14),
- store_name VARCHAR2(60),
- street_address VARCHAR2(232),
- city VARCHAR2(85),
- state_province VARCHAR2(14),
- country VARCHAR2(7),
- postcode VARCHAR2(12),
- phone_number VARCHAR2(20)
+ store_number NVARCHAR(14),
+ store_name NVARCHAR(60),
+ street_address NVARCHAR(232),
+ city NVARCHAR(85),
+ state_province NVARCHAR(14),
+ country NVARCHAR(7),
+ postcode NVARCHAR(12),
+ phone_number NVARCHAR(20)
 );
 
 

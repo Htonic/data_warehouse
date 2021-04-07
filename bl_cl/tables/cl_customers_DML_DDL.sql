@@ -1,10 +1,10 @@
 CREATE TABLE cl_customers(
     customer_id INT,
-    age_range VARCHAR2(8),
-    marital_status VARCHAR2(40),
+    age_range NVARCHAR(8),
+    marital_status NVARCHAR(40),
     rented INT,
-    family_size VARCHAR2(4),
-    no_of_children VARCHAR2(4),
+    family_size NVARCHAR(4),
+    no_of_children NVARCHAR(4),
     income_bracket INT
 );
 

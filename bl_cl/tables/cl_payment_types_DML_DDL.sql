@@ -1,6 +1,6 @@
 CREATE TABLE cl_payment_types(
     payment_type_id INT,
-    payment_type_desc VARCHAR2(20)
+    payment_type_desc NVARCHAR(20)
 )
 ;
 

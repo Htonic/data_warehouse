@@ -1,8 +1,8 @@
 CREATE TABLE ce_cities (
-    city_id    INTEGER PRIMARY KEY,
-    city_name  VARCHAR2(85) NOT NULL,
+    city_id    INTEGER NOT NULL,
+    city_name  NVARCHAR(85) NOT NULL,
     state_id   INTEGER DEFAULT -1 NOT NULL,
-    update_dt  DATE DEFAULT CURRENT_DATE NOT NULL
+    update_dt  DATE DEFAULT GETDATE() NOT NULL
 );
 
 INSERT INTO ce_cities(city_id, city_name, state_id) VALUES

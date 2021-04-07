@@ -1,9 +1,9 @@
 CREATE TABLE cl_products(
     item_id INT,
     brand INT,
-    brand_type VARCHAR2(20),
-    product_category VARCHAR2(40),
-    insert_date DATE DEFAULT CURRENT_DATE
+    brand_type NVARCHAR(20),
+    product_category NVARCHAR(40),
+    insert_date DATE DEFAULT GETDATE()
 );
 
 INSERT INTO cl_products ( item_id, brand, brand_type, product_category)

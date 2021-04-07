@@ -1,5 +1,5 @@
 CREATE TABLE ce_customers (
-    customer_id            INTEGER PRIMARY KEY,
+    customer_id            INTEGER NOT NULL,
     customer_natural_id  INTEGER NOT NULL,
     rented                 INTEGER NOT NULL,
     income_bracket         INTEGER NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE ce_customers (
     marital_id             INTEGER DEFAULT -1 NOT NULL,
     family_id              INTEGER DEFAULT -1 NOT NULL,
     no_of_child_id         INTEGER DEFAULT -1 NOT NULL,
-    update_dt              DATE DEFAULT CURRENT_DATE NOT NULL
+    update_dt              DATE DEFAULT GETDATE() NOT NULL
 );
 
 INSERT INTO ce_customers(customer_id, customer_natural_id, rented, income_bracket,

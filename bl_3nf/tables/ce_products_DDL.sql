@@ -1,12 +1,12 @@
 CREATE TABLE ce_products (
-    product_id            INTEGER PRIMARY KEY,
+    product_id            INTEGER NOT NULL,
     product_natural_id    INTEGER NOT NULL,
     brand_id              INTEGER DEFAULT -1 NOT NULL,
     product_category_id   INTEGER DEFAULT -1 NOT NULL,
-    start_date            DATE DEFAULT CURRENT_DATE NOT NULL,
+    start_date            DATE DEFAULT GETDATE() NOT NULL,
     end_date              DATE DEFAULT '31-12-9999' NOT NULL,
     is_active           CHAR(1) NOT NULL,
-    update_dt             DATE DEFAULT CURRENT_DATE NOT NULL
+    update_dt             DATE DEFAULT GETDATE() NOT NULL
 );
 
 ALTER TABLE ce_products

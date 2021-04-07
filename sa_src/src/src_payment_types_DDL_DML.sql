@@ -1,6 +1,6 @@
 CREATE TABLE src_payment_types(
-    payment_type_id VARCHAR2(255),
-    payment_type_desc VARCHAR2(255)
+    payment_type_id NVARCHAR(255),
+    payment_type_desc NVARCHAR(255)
 )
 ;
 

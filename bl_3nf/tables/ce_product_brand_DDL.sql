@@ -1,8 +1,8 @@
 CREATE TABLE ce_product_brand (
-    brand_id    INTEGER PRIMARY KEY,
-    brand       INTEGER,
+    brand_id    INTEGER NOT NULL,
+    brand       INTEGER NOT NULL,
     brand_type_id INTEGER DEFAULT -1 NOT NULL,
-    update_dt   DATE DEFAULT CURRENT_DATE NOT NULL
+    update_dt   DATE DEFAULT GETDATE() NOT NULL
 );
 
 ALTER TABLE ce_product_brand

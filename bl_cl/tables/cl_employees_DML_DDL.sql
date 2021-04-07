@@ -1,10 +1,10 @@
 CREATE TABLE cl_employees
 (
     employee_id INT,
-    first_name VARCHAR2(80),
-    last_name VARCHAR2(80),
-    email VARCHAR2(80),
-    phone VARCHAR2(80),
+    first_name NVARCHAR(80),
+    last_name NVARCHAR(80),
+    email NVARCHAR(80),
+    phone NVARCHAR(80),
     age INT
 );
 

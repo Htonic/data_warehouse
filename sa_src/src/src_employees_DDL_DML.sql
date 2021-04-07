@@ -1,11 +1,11 @@
 CREATE TABLE src_employees
 (
-    employee_id VARCHAR2(255),
-    first_name VARCHAR2(255),
-    last_name VARCHAR2(255),
-    email VARCHAR2(255),
-    phone VARCHAR2(255),
-    age VARCHAR2(255)
+    employee_id NVARCHAR(255),
+    first_name NVARCHAR(255),
+    last_name NVARCHAR(255),
+    email NVARCHAR(255),
+    phone NVARCHAR(255),
+    age NVARCHAR(255)
 );
 
 

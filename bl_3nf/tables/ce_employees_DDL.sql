@@ -1,12 +1,12 @@
 CREATE TABLE ce_employees (
-    employee_id            INTEGER PRIMARY KEY,
+    employee_id            INTEGER NOT NULL,
     employee_natural_id  INTEGER NOT NULL,
-    employee_name          VARCHAR2(80) NOT NULL,
-    employee_surname       VARCHAR2(80) NOT NULL,
+    employee_name          NVARCHAR(80) NOT NULL,
+    employee_surname       NVARCHAR(80) NOT NULL,
     age                    INTEGER NOT NULL,
-    email                  VARCHAR2(80) NOT NULL,
-    phone                  VARCHAR2(80) NOT NULL,
-    update_dt              DATE DEFAULT CURRENT_DATE NOT NULL
+    email                  NVARCHAR(80) NOT NULL,
+    phone                  NVARCHAR(80) NOT NULL,
+    update_dt              DATE DEFAULT GETDATE() NOT NULL
 );
 
 INSERT INTO ce_employees(employee_id, employee_natural_id, employee_name,

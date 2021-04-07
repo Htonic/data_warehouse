@@ -1,7 +1,7 @@
 CREATE TABLE ce_marital_statuses (
-    marital_id      INTEGER PRIMARY KEY,
-    marital_status  VARCHAR2(40) NOT NULL,
-    update_dt       DATE DEFAULT CURRENT_DATE NOT NULL
+    marital_id      INTEGER NOT NULL,
+    marital_status  NVARCHAR(40) NOT NULL,
+    update_dt       DATE DEFAULT GETDATE() NOT NULL
 );
 
 INSERT INTO ce_family_sizes(family_id, family_size) VALUES

@@ -1,12 +1,12 @@
 CREATE TABLE src_stores(
- store_number VARCHAR2(500),
- store_name VARCHAR2(500),
- street_address VARCHAR2(500),
- city VARCHAR2(500),
- state_province VARCHAR2(500),
- country VARCHAR2(500),
- postcode VARCHAR2(500),
- phone_number VARCHAR2(500)
+ store_number NVARCHAR(500),
+ store_name NVARCHAR(500),
+ street_address NVARCHAR(500),
+ city NVARCHAR(500),
+ state_province NVARCHAR(500),
+ country NVARCHAR(500),
+ postcode NVARCHAR(500),
+ phone_number NVARCHAR(500)
 );
 
 INSERT INTO src_stores ( store_number, store_name, street_address, city,

@@ -8,10 +8,10 @@ CREATE TABLE cl_sales(
   customer_id  INT,
   item_id INT,
   quantity INT,
-  selling_price NUMBER(18,2),
-  cost_price NUMBER(18,2),
-  other_discount NUMBER(18,2),
-  coupon_discount NUMBER(18,2),
+  selling_price NUMERIC(18,2),
+  cost_price NUMERIC(18,2),
+  other_discount NUMERIC(18,2),
+  coupon_discount NUMERIC(18,2),
   update_dt DATE
 );
 
@@ -23,5 +23,5 @@ SELECT BL_CL.cl_sale_seq.NEXTVAL ,CAST(coupon_id AS INT), CAST(store_id AS INT),
   TO_NUMBER(TRIM(selling_price), '9999999.99'), TO_NUMBER(TRIM(selling_price), '9999999.99') * 0.75,
   TO_NUMBER(TRIM(other_discount), '9999999.99'), 
   TO_NUMBER(substr(trim(coupon_discount), 1, LENGTH(trim(coupon_discount)) -1), '99999999.99'),
-  current_Date
+  GETDATE()
 FROM schema_src.src_sales;
