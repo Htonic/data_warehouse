@@ -1,0 +1,1 @@
+CALL  bl_cl.manager_pkg.dwh_initial_load_all();

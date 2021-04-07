@@ -1,0 +1,55 @@
+CREATE SEQUENCE bl_dm.sequence_stores
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+    
+CREATE SEQUENCE bl_dm.sequence_products
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+    
+CREATE SEQUENCE bl_dm.sequence_employees
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+CREATE SEQUENCE bl_dm.sequence_payment_types
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+    
+CREATE SEQUENCE bl_dm.sequence_coupons
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+CREATE SEQUENCE bl_dm.sequence_customers
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+
+CREATE SEQUENCE bl_dm.sequence_sales
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;

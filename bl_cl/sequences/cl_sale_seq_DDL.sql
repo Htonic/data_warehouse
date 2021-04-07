@@ -1,0 +1,8 @@
+CREATE SEQUENCE bl_cl.cl_sale_seq
+INCREMENT BY 1
+    START WITH 1
+    MINVALUE 0
+    NOMAXVALUE
+    NOCYCLE
+    NOCACHE;
+    
