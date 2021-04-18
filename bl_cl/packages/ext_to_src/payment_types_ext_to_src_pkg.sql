@@ -1,38 +1,13 @@
-CREATE OR REPLACE PACKAGE bl_cl.payment_types_ext_to_src_pkg
-   AUTHID DEFINER
-IS
-    PROCEDURE insert_payment_types;
-    PROCEDURE merge_payment_types;
-
-END payment_types_ext_to_src_pkg;
-/
-
-CREATE OR REPLACE PACKAGE BODY bl_cl.payment_types_ext_to_src_pkg
-IS
-    PROCEDURE insert_payment_types
-    IS
-    BEGIN
-    EXECUTE IMMEDIATE 'TRUNCATE TABLE schema_src.src_payment_types';
-    
-    INSERT INTO schema_src.src_payment_types(payment_type_id, payment_type_desc)
-        SELECT payment_type_id, payment_type_desc FROM schema_src.external_payment_types;
-    
-    log_event('Inserted ' || sql%Rowcount || ' rows into table src_payment_types');
-    COMMIT;
-    
-    END;
-    
-PROCEDURE merge_payment_types
-IS
+CREATE OR ALTER  PROCEDURE ext_to_src.insert_payment_types
+AS
+DECLARE @cmd nvarchar(max) = '';
+DECLARE @event_message nvarchar(max) = ''; 
 BEGIN
-    INSERT INTO schema_src.src_payment_types(payment_type_id, payment_type_desc)
-        SELECT payment_type_id, payment_type_desc FROM schema_src.external_payment_types
-        MINUS
-        SELECT payment_type_id, payment_type_desc FROM schema_src.src_payment_types;
+	SET @cmd = 'TRUNCATE TABLE sa_src.dbo.src_payment_types';
+    EXEC sys.sp_executesql @cmd;
     
-    log_event('Inserted ' || sql%Rowcount || ' rows into table src_payment_types');
-    COMMIT;
+    INSERT INTO sa_src.dbo.src_payment_types(payment_type_id, payment_type_desc)
+        SELECT payment_type_id, payment_type_desc FROM sa_src.dbo.external_payment_types;
+    SET @event_message = CONCAT('Inserted ',  @@ROWCOUNT, ' rows into table src_payment_types');
+    EXEC bl_cl.dbo.log_event @event_desc = @event_message;
 END;
-    
-END payment_types_ext_to_src_pkg;
-/

@@ -20,5 +20,3 @@ TRUNCATE TABLE store_id_temp;
 INSERT INTO store_id_temp(store_id_sales, store_number)
 SELECT NEXT VALUE FOR  sequence_store_id, store_number FROM cl_stores;
 
-
-

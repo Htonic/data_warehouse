@@ -1,42 +1,16 @@
-CREATE OR REPLACE PACKAGE bl_cl.stores_ext_to_src_pkg
-   AUTHID DEFINER
-IS
-    PROCEDURE insert_stores;
-    PROCEDURE merge_stores;
-END stores_ext_to_src_pkg;
-/
-
-CREATE OR REPLACE PACKAGE BODY bl_cl.stores_ext_to_src_pkg
-IS
-
-    PROCEDURE insert_stores
-    IS
-    BEGIN
-    EXECUTE IMMEDIATE 'TRUNCATE TABLE schema_src.src_stores';
+CREATE OR ALTER  PROCEDURE ext_to_src.insert_stores
+AS
+DECLARE @cmd nvarchar(max) = '';
+DECLARE @event_message nvarchar(max) = ''; 
+BEGIN
+	SET @cmd = 'TRUNCATE TABLE sa_src.dbo.src_stores';
+    EXEC sys.sp_executesql @cmd;
     
-    INSERT INTO schema_src.src_stores ( store_number, store_name, street_address, city,
+    INSERT INTO sa_src.dbo.src_stores ( store_number, store_name, street_address, city,
     state_province, country, postcode, phone_number)
     SELECT  store_number, store_name, street_address, city,
-    state_province, country, postcode, phone_number FROM schema_src.external_stores ;
-    
-    log_event('Inserted ' || sql%Rowcount || ' rows into table src_stores');
-    COMMIT;
-    
-    END;
+    state_province, country, postcode, phone_number FROM sa_src.dbo.external_stores ;
+    SET @event_message = CONCAT('Inserted ',  @@ROWCOUNT, ' rows into table src_stores');
+    EXEC bl_cl.dbo.log_event @event_desc = @event_message;
+END;
 
-    PROCEDURE merge_stores
-    IS
-    BEGIN
-     INSERT INTO schema_src.src_stores ( store_number, store_name, street_address, city,
-    state_province, country, postcode, phone_number)
-    SELECT  store_number, store_name, street_address, city,
-    state_province, country, postcode, phone_number FROM schema_src.external_stores
-    MINUS 
-    SELECT  store_number, store_name, street_address, city,
-    state_province, country, postcode, phone_number FROM schema_src.src_stores;
-    
-    log_event('Inserted ' || sql%Rowcount || ' rows into table src_stores');
-    COMMIT;
-    END;
-END stores_ext_to_src_pkg;
-/

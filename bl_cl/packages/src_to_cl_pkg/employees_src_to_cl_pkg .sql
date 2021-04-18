@@ -1,34 +1,15 @@
-CREATE OR REPLACE PACKAGE bl_cl.employees_src_to_cl_pkg
-   AUTHID DEFINER
-IS
-    PROCEDURE insert_employees;
-    --PROCEDURE merge_employees;
-
-END employees_src_to_cl_pkg;
-/
-
-CREATE OR REPLACE PACKAGE BODY bl_cl.employees_src_to_cl_pkg
-IS
-
-    PROCEDURE insert_employees
-    IS
-    BEGIN
-    EXECUTE IMMEDIATE 'TRUNCATE TABLE bl_cl.cl_employees';
+CREATE OR ALTER  PROCEDURE src_to_cl.insert_employees
+AS
+DECLARE @cmd nvarchar(max) = '';
+DECLARE @event_message nvarchar(max) = ''; 
+BEGIN
+	SET @cmd = 'TRUNCATE TABLE cl_employees';
+    EXEC sys.sp_executesql @cmd;
     
     INSERT INTO cl_employees (employee_id, first_name , last_name, email, phone, age)
         SELECT  CAST(employee_id AS INT), TRIM(first_name), TRIM(last_name),
-    TRIM(email), TRIM(phone),CAST(SUBSTR(age, 1, 2) AS INT)  FROM schema_src.src_employees;
-    log_event('Inserted ' || sql%Rowcount || ' rows into table bl_cl.cl_employees');
-    COMMIT;
-    
-    END;
-    
-   /* PROCEDURE merge_employees
-    IS
-    BEGIN
-    
-    log_event('Merged ' || sql%Rowcount || ' rows into table bl_cl.cl_employees');
-    COMMIT;
-    END;*/
-END employees_src_to_cl_pkg;
-/
+    TRIM(email), TRIM(phone),CAST(age AS INT)  FROM sa_src.dbo.src_employees;
+
+    SET @event_message = CONCAT('Inserted ',  @@ROWCOUNT, ' rows into table cl_employees');
+    EXEC bl_cl.dbo.log_event @event_desc = @event_message;
+END;

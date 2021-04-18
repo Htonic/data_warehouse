@@ -1,37 +1,15 @@
-CREATE OR REPLACE PACKAGE bl_cl.products_src_to_cl_pkg
-   AUTHID DEFINER
-IS
-    PROCEDURE insert_products;
-    --PROCEDURE merge_products;
-
-
-END products_src_to_cl_pkg;
-/
-
-CREATE OR REPLACE PACKAGE BODY bl_cl.products_src_to_cl_pkg
-IS
-    PROCEDURE insert_products
-    IS
-    BEGIN
-    EXECUTE IMMEDIATE 'TRUNCATE TABLE bl_cl.cl_products';
+CREATE OR ALTER  PROCEDURE src_to_cl.insert_products
+AS
+DECLARE @cmd nvarchar(max) = '';
+DECLARE @event_message nvarchar(max) = ''; 
+BEGIN
+	SET @cmd = 'TRUNCATE TABLE cl_products';
+    EXEC sys.sp_executesql @cmd;
     
     INSERT INTO cl_products ( item_id, brand, brand_type, product_category)
     SELECT CAST(TRIM(item_id) AS INT),  CAST(TRIM(brand) AS INT), TRIM(brand_type),
-     TRIM(product_category) FROM schema_src.src_products;
-     
-    log_event('Inserted ' || SQL%ROWCOUNT || ' rows into table bl_cl.cl_products');
-    COMMIT;
-    
-    END; 
+     TRIM(product_category) FROM sa_src.dbo.src_products;
 
-    
-    /*PROCEDURE merge_products
-    IS
-    BEGIN
-  
-    log_event('Merged ' || SQL%ROWCOUNT || ' rows into table bl_cl.cl_products');
-    COMMIT;
-    
-    END;*/
-END products_src_to_cl_pkg;
-/
+    SET @event_message = CONCAT('Inserted ',  @@ROWCOUNT, ' rows into table cl_products');
+    EXEC bl_cl.dbo.log_event @event_desc = @event_message;
+END;

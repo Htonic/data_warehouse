@@ -1,40 +1,14 @@
-CREATE OR REPLACE PACKAGE bl_cl.employees_ext_to_src_pkg
-   AUTHID DEFINER
-IS
-    PROCEDURE insert_employees;
-    PROCEDURE merge_employees;
+CREATE OR ALTER  PROCEDURE ext_to_src.insert_employees
+AS
+DECLARE @cmd nvarchar(max) = '';
+DECLARE @event_message nvarchar(max) = ''; 
+BEGIN
+	SET @cmd = 'TRUNCATE TABLE sa_src.dbo.src_employees';
+    EXEC sys.sp_executesql @cmd;
+    
+    INSERT INTO sa_src.dbo.src_employees (employee_id, first_name , last_name, email, phone, age)
+    SELECT  employee_id, first_name , last_name, email, phone, age  FROM sa_src.dbo.external_employees;
 
-END employees_ext_to_src_pkg;
-/
-
-CREATE OR REPLACE PACKAGE BODY bl_cl.employees_ext_to_src_pkg
-IS
-
-    PROCEDURE insert_employees
-    IS
-    BEGIN
-    EXECUTE IMMEDIATE 'TRUNCATE TABLE schema_src.src_employees';
-    
-    INSERT INTO schema_src.src_employees (employee_id, first_name , last_name, email, phone, age)
-    SELECT  employee_id, first_name , last_name, email, phone, age  FROM schema_src.external_employees;
-    
-    log_event('Inserted ' || sql%Rowcount || ' rows into table src_employees');
-    COMMIT;
-    
-    END;
-    
-    PROCEDURE merge_employees
-    IS
-    BEGIN
-    
-    INSERT INTO schema_src.src_employees (employee_id, first_name , last_name, email, phone, age)
-    
-    SELECT  employee_id, first_name , last_name, email, phone, age  FROM schema_src.external_employees
-    MINUS
-    SELECT  employee_id, first_name , last_name, email, phone, age  FROM schema_src.src_employees;
-    
-    log_event('Inserted ' || sql%Rowcount || ' rows into table src_employees');
-    COMMIT;
-    END;
-END employees_ext_to_src_pkg;
-/
+    SET @event_message = CONCAT('Inserted ',  @@ROWCOUNT, ' rows into table src_employees');
+    EXEC bl_cl.dbo.log_event @event_desc = @event_message;
+END;

@@ -1,32 +1,14 @@
-CREATE OR REPLACE PACKAGE bl_cl.payment_types_src_to_cl_pkg
-   AUTHID DEFINER
-IS
-    PROCEDURE insert_payment_types;
- --  PROCEDURE merge_payment_types;
-
-END payment_types_src_to_cl_pkg;
-/
-
-CREATE OR REPLACE PACKAGE BODY bl_cl.payment_types_src_to_cl_pkg
-IS
-    PROCEDURE insert_payment_types
-    IS
-    BEGIN
-    EXECUTE IMMEDIATE 'TRUNCATE TABLE bl_cl.cl_payment_types';
+CREATE OR ALTER  PROCEDURE src_to_cl.insert_payment_types
+AS
+DECLARE @cmd nvarchar(max) = '';
+DECLARE @event_message nvarchar(max) = ''; 
+BEGIN
+	SET @cmd = 'TRUNCATE TABLE cl_payment_types';
+    EXEC sys.sp_executesql @cmd;
     
     INSERT INTO cl_payment_types(payment_type_id, payment_type_desc)
-    SELECT CAST(payment_type_id AS INT), trim(payment_type_desc) FROM schema_src.src_payment_types;
-    
-    log_event('Inserted ' || sql%Rowcount || ' rows into table bl_cl.cl_payment_types');
-    COMMIT;
-    
-    END;
-    /*
-PROCEDURE merge_payment_types
-IS
-BEGIN
+    SELECT CAST(payment_type_id AS INT), trim(payment_type_desc) FROM sa_src.dbo.src_payment_types;
 
+    SET @event_message = CONCAT('Inserted ',  @@ROWCOUNT, ' rows into table cl_payment_types');
+    EXEC bl_cl.dbo.log_event @event_desc = @event_message;
 END;
-   */ 
-END payment_types_src_to_cl_pkg;
-/

@@ -1,32 +1,15 @@
-CREATE OR REPLACE PACKAGE bl_cl.coupons_src_to_cl_pkg
-   AUTHID DEFINER
-IS
-    PROCEDURE insert_coupons;
-    --PROCEDURE merge_coupons;
-
-END coupons_src_to_cl_pkg;
-/
-
-CREATE OR REPLACE PACKAGE BODY bl_cl.coupons_src_to_cl_pkg
-IS
-
-
-    PROCEDURE insert_coupons
-    IS    
-    BEGIN
-        EXECUTE IMMEDIATE 'TRUNCATE TABLE bl_cl.cl_coupons';
-        
+CREATE OR ALTER  PROCEDURE src_to_cl.insert_coupons
+AS
+DECLARE @cmd nvarchar(max) = '';
+DECLARE @event_message nvarchar(max) = ''; 
+BEGIN
+	SET @cmd = 'TRUNCATE TABLE cl_coupons';
+    EXEC sys.sp_executesql @cmd;
+    
     INSERT INTO cl_coupons (coupon_id,coupon_desc,issued_quantity)
     SELECT CAST(TRIM(coupon_id) as INT), TRIM(coupon_desc),
-    CAST(SUBSTR(TRIM(issued_quantity),1, LENGTH(trim(issued_quantity)) -1) as INT) FROM schema_src.src_coupons;
-    END;
+    CAST(issued_quantity as INT) FROM sa_src.dbo.src_coupons;
     
-   /* 
-    PROCEDURE merge_coupons
-    IS    
-    BEGIN
-
-    END;*/
-
-END coupons_src_to_cl_pkg;
-/
+    SET @event_message = CONCAT('Inserted ',  @@ROWCOUNT, ' rows into table cl_coupons');
+    EXEC bl_cl.dbo.log_event @event_desc = @event_message;
+END;

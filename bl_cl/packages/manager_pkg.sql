@@ -33,30 +33,28 @@ IS
         coupons_src_to_cl_pkg.insert_coupons;
         payment_types_src_to_cl_pkg.insert_payment_types;
     --load into 3nf
-        bl_3nf.switch_constraints_pkg.disable_3nf_foreign_keys;
-    
-        stores_cl_to_3nf_pkg.insert_countries;
-        stores_cl_to_3nf_pkg.insert_postcodes;
-        stores_cl_to_3nf_pkg.insert_states;
-        stores_cl_to_3nf_pkg.insert_cities;
-        stores_cl_to_3nf_pkg.insert_stores;
-        
-        products_cl_to_3nf_pkg.insert_product_brand_types;
-        products_cl_to_3nf_pkg.insert_product_brand;
-        products_cl_to_3nf_pkg.insert_product_categories;     
-        products_cl_to_3nf_pkg.insert_products;
-        
-        customers_cl_to_3nf_pkg.insert_age_range;
-        customers_cl_to_3nf_pkg.insert_family_sizes;
-        customers_cl_to_3nf_pkg.insert_marital_statuses;
-        customers_cl_to_3nf_pkg.insert_no_of_childs;
-        customers_cl_to_3nf_pkg.insert_customers;
-        
-        payment_types_cl_to_3nf_pkg.insert_payment_types;
-        employees_cl_to_3nf_pkg.insert_employees;
-        coupons_cl_to_3nf_pkg.insert_coupons;
-        
-        sales_cl_to_3nf_pkg.insert_sales;
+EXEC cl_to_3nf.insert_countries;
+EXEC cl_to_3nf.insert_postcodes;
+EXEC cl_to_3nf.insert_states;
+EXEC cl_to_3nf.insert_cities;
+EXEC cl_to_3nf.insert_stores;
+
+EXEC cl_to_3nf.insert_product_brand_types;
+EXEC cl_to_3nf.insert_product_brand;
+EXEC cl_to_3nf.insert_product_categories;
+EXEC cl_to_3nf.insert_products;
+
+EXEC cl_to_3nf.insert_employees;
+EXEC cl_to_3nf.insert_coupons;
+EXEC cl_to_3nf.insert_payment_types;
+
+EXEC cl_to_3nf.insert_age_range;
+EXEC cl_to_3nf.insert_family_sizes;
+EXEC cl_to_3nf.insert_marital_statuses;
+EXEC cl_to_3nf.insert_no_of_childs;
+EXEC cl_to_3nf.insert_customers;
+
+EXEC cl_to_3nf.insert_sales;        
         
         bl_3nf.switch_constraints_pkg.enable_3nf_foreign_keys;
     --load into dm
