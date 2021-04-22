@@ -34,3 +34,11 @@ LOG ON
 ( NAME = sa_src_log,
     FILENAME = 'D:\sql_server_databases\sa_src_log.ldf') ;
 
+CREATE DATABASE bl_qa
+ON
+( NAME = bl_qa_dat,
+    FILENAME = 'D:\sql_server_databases\bl_qa_dat.mdf'
+	)
+LOG ON
+( NAME = bl_qa_log,
+    FILENAME = 'D:\sql_server_databases\bl_qa_log.ldf') ;
