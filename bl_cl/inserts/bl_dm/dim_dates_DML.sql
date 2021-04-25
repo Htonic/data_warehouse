@@ -1,28 +1,33 @@
-alter session set nls_date_language = ENGLISH; --change language to english
+TRUNCATE TABLE dim_dates;
 
-INSERT INTO bl_dm.dim_dates (sale_date, fulldate_desc, day_number_in_week,
+SET LANGUAGE English;
+DECLARE @StartDate DATE = '19700101';
+DECLARE @EndDate DATE = '20301231';
+
+WITH all_dates AS (
+SELECT  DATEADD(DAY, nbr - 1, @StartDate) as generic_date
+FROM    ( SELECT    ROW_NUMBER() OVER ( ORDER BY c.object_id ) AS Nbr
+          FROM      sys.columns c
+		  CROSS JOIN sys.columns AS s2
+        ) nbrs
+WHERE   nbr - 1 <= DATEDIFF(DAY, @StartDate, @EndDate))
+
+INSERT INTO dim_dates (sale_date, fulldate_desc, day_number_in_week,
  day_of_week_desc, day_number_in_calendar_month, day_number_in_calendar_year,
  calendar_week_number_in_year, calendar_month, calendar_month_desc,
  calendar_quarter, calendar_year, day_number_in_fiscal_month, day_number_in_fiscal_year)
-SELECT date_of_sale,
-    TO_CHAR(date_of_sale, 'Day') || ' ' || EXTRACT(DAY FROM date_of_sale) || ' ' || TO_CHAR(date_of_sale, 'Mon') || ' ' || EXTRACT(YEAR FROM date_of_sale) AS  fulldate_desc,
-    TO_CHAR(date_of_sale, 'D') AS day_number_in_week,
-    TO_CHAR(date_of_sale, 'Day') AS day_of_week_desc, 
-    EXTRACT(DAY FROM date_of_sale) AS day_number_in_calendar_month,
-    TO_CHAR(date_of_sale, 'DDD') AS day_number_in_calendar_year,
-    TO_CHAR(date_of_sale, 'WW') as calendar_week_number_in_year,
-    EXTRACT(MONTH FROM date_of_sale) AS calendar_month,
-    TO_CHAR(date_of_sale, 'Month') AS calendar_month_desc,
-    TO_CHAR(date_of_sale, 'Q') AS calendar_quarter,
-    EXTRACT(YEAR FROM date_of_sale) AS calendar_year,
-    EXTRACT(DAY FROM date_of_sale) AS day_number_in_fiscal_month,
-    TO_CHAR(date_of_sale, 'DDD') AS day_number_in_fiscal_year
-    FROM (
-    SELECT to_date('01.01.1970','DD.MM.YYYY') + level -1  AS date_of_sale
-    FROM dual
-    CONNECT by to_date('01.01.1970','DD.MM.YYYY') + level -1 <= to_date('31.12.2030','DD.MM.YYYY')
-);
-COMMIT;
 
-
-
+select  generic_date, 
+CONCAT(DATENAME(dw, generic_date), ', ', DATEPART(d, generic_date), ' ',DATENAME(m,generic_date), ' ', DATEPART(yy, generic_date)) as   fulldate_desc,
+DATEPART(dw, generic_date) AS day_number_in_week,
+DATENAME(dw, generic_date) AS day_of_week_desc,
+DATEPART(d, generic_date) AS day_number_in_calendar_month,
+DATEPART(DAYOFYEAR, generic_date) AS day_number_in_calendar_year,
+DATEPART(isowk, generic_date) AS calendar_week_number_in_year,
+DATEPART(m, generic_date) AS calendar_month,
+DATENAME(m, generic_date) AS calendar_month_desc,
+DATEPART(QUARTER, generic_date) AS calendar_quarter,
+DATEPART(YEAR, generic_date) AS calendar_year,
+DATEPART(DAY, generic_date) AS day_number_in_fiscal_month,
+DATEPART(DAYOFYEAR, generic_date) AS day_number_in_fiscal_year
+from all_dates;
