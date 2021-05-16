@@ -10,7 +10,7 @@ BEGIN
     sale_date, coupon_surrogate_id, employee_surrogate_id, payment_type_surrogate_id, store_surrogate_id,
     quantity, selling_price, cost_price, other_discount, coupon_discount, update_dt)
 	
-	SELECT NEXT VALUE FOR bl_dm.dbo.sequence_sales, prod.product_surrogate_id, cust.customer_surrogate_id,
+	SELECT sale_id, prod.product_surrogate_id, cust.customer_surrogate_id,
 	cs.sale_date, coup.coupon_surrogate_id, empl.employee_surrogate_id, paym.payment_type_surrogate_id,
 	stor.store_surrogate_id, cs.quantity, cs.selling_price, cs.cost_price,
 	cs.other_discount, cs.coupon_discount, cs.update_dt

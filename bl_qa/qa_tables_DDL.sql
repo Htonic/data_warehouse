@@ -22,7 +22,7 @@ CREATE TABLE stage(
 
  CREATE TABLE dq_checks (
 	etl_check_id INTEGER IDENTITY(1,1) PRIMARY KEY,
-	check_name NVARCHAR(60) NOT NULL,
+	check_name NVARCHAR(80) NOT NULL,
 	failed_perc DECIMAL(18, 2) NOT NULL,
 	check_type_id INTEGER FOREIGN KEY REFERENCES check_type(check_type_id),
 	status_id INTEGER FOREIGN KEY REFERENCES check_status(status_id),
